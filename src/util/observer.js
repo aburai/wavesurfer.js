@@ -63,7 +63,7 @@ export default class Observer {
         if (handlers) {
             if (fn) {
                 for (i = handlers.length - 1; i >= 0; i--) {
-                    if (handlers[i] == fn) {
+                    if (handlers[i] === fn) {
                         handlers.splice(i, 1);
                     }
                 }
@@ -104,7 +104,7 @@ export default class Observer {
      * Manually fire an event
      *
      * @param {string} event The event to fire manually
-     * @param {...any} args The arguments with which to call the listeners
+     * @param {*} args The arguments with which to call the listeners
      */
     fireEvent(event, ...args) {
         if (!this.handlers) {

@@ -640,12 +640,12 @@ export default class WaveSurfer extends util.Observer {
         }
 
         // Back compat
-        if (this.params.backend == 'AudioElement') {
+        if (this.params.backend === 'AudioElement') {
             this.params.backend = 'MediaElement';
         }
 
         if (
-            this.params.backend == 'WebAudio' &&
+            this.params.backend === 'WebAudio' &&
             !this.Backend.prototype.supportsWebAudio.call(null)
         ) {
             this.params.backend = 'MediaElement';
@@ -734,8 +734,8 @@ export default class WaveSurfer extends util.Observer {
      * Starts playback from the current position. Optional start and end
      * measured in seconds can be used to set the range of audio to play.
      *
-     * @param {?number} start Position to start at
-     * @param {?number} end Position to end at
+     * @param {number?} start Position to start at
+     * @param {number?} end Position to end at
      * @emits WaveSurfer#interaction
      * @return {Promise} Result of the backend play method
      * @example
@@ -743,7 +743,9 @@ export default class WaveSurfer extends util.Observer {
      * wavesurfer.play(1, 5);
      */
     play(start, end) {
-        this.fireEvent('interaction', () => this.play(start, end));
+        this.fireEvent('interaction', () => {
+            void this.play(start, end);
+        });
         return this.backend.play(start, end);
     }
 
@@ -878,7 +880,7 @@ export default class WaveSurfer extends util.Observer {
      * @example wavesurfer.stop();
      */
     stop() {
-        this.pause();
+        void this.pause();
         this.seekTo(0);
         this.drawer.progress(0);
     }
@@ -972,12 +974,14 @@ export default class WaveSurfer extends util.Observer {
             // turn off the volume and update the mute properties
             this.savedVolume = this.backend.getVolume();
             this.backend.setVolume(0);
+            this.backend.isMuted = true;
             this.isMuted = true;
             this.fireEvent('volume', 0);
         } else {
             // If currently muted then restore to the saved volume
             // and update the mute properties
             this.backend.setVolume(this.savedVolume);
+            this.backend.isMuted = false;
             this.isMuted = false;
             this.fireEvent('volume', this.savedVolume);
         }
@@ -1415,7 +1419,7 @@ export default class WaveSurfer extends util.Observer {
             data => {
                 // Only use the decoded data if we haven't been destroyed or
                 // another decode started in the meantime
-                if (!this.isDestroyed && this.arraybuffer == arraybuffer) {
+                if (!this.isDestroyed && this.arraybuffer === arraybuffer) {
                     callback(data);
                     this.arraybuffer = null;
                 }
@@ -1429,7 +1433,7 @@ export default class WaveSurfer extends util.Observer {
      *
      * @param {string} url The URL of the file object
      * @param {function} callback The function to call on complete
-     * @returns {util.fetchFile} fetch call
+     * @returns {Observer} fetch call
      * @private
      */
     getArrayBuffer(url, callback) {
@@ -1465,7 +1469,7 @@ export default class WaveSurfer extends util.Observer {
      * Called while the audio file is loading
      *
      * @private
-     * @param {Event} e Progress event
+     * @param {ProgressEvent} e Progress event
      * @emits WaveSurfer#loading
      */
     onProgress(e) {

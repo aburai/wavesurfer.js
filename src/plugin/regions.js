@@ -407,7 +407,7 @@ class Region {
                     }
                     if (
                         e.targetTouches &&
-                        e.targetTouches[0].identifier != touchId
+                        e.targetTouches[0].identifier !== touchId
                     ) {
                         return;
                     }
@@ -825,7 +825,7 @@ export default class RegionsPlugin {
             if (e.touches && e.touches.length > 1) {
                 return;
             }
-            if (e.targetTouches && e.targetTouches[0].identifier != touchId) {
+            if (e.targetTouches && e.targetTouches[0].identifier !== touchId) {
                 return;
             }
 

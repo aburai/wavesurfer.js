@@ -30,8 +30,6 @@ export default class MediaElement extends WebAudio {
         /** @private */
         this.mediaType = params.mediaType.toLowerCase();
         /** @private */
-        this.elementPosition = params.elementPosition;
-        /** @private */
         this.peaks = null;
         /** @private */
         this.playbackRate = 1;
@@ -168,7 +166,7 @@ export default class MediaElement extends WebAudio {
             } else {
                 this.volume = media.volume;
             }
-            this.fireEvent('volume');
+            this.fireEvent('volume', this.volume);
         });
 
         this.media = media;

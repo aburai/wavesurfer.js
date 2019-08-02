@@ -148,9 +148,9 @@ export default class Drawer extends util.Observer {
      * @param {number[]|Number.<Array[]>} peaks Can also be an array of arrays
      * for split channel rendering
      * @param {number} length The width of the area that should be drawn
-     * @param {number} start The x-offset of the beginning of the area that
+     * @param {number?} start The x-offset of the beginning of the area that
      * should be rendered
-     * @param {number} end The x-offset of the end of the area that should be
+     * @param {number?} end The x-offset of the end of the area that should be
      * rendered
      */
     drawPeaks(peaks, length, start, end) {

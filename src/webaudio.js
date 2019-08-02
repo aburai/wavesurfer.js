@@ -145,7 +145,7 @@ export default class WebAudio extends util.Observer {
         this.splitPeaks = [];
         /** @private */
         this.state = null;
-        /** @private */
+        /** @public */
         this.explicitDuration = params.duration;
     }
 
@@ -306,7 +306,7 @@ export default class WebAudio extends util.Observer {
                 );
             }
             audio.autoplay = true;
-            var dest = this.ac.createMediaStreamDestination();
+            const dest = this.ac.createMediaStreamDestination();
             this.gainNode.disconnect();
             this.gainNode.connect(dest);
             audio.srcObject = dest.stream;
@@ -360,7 +360,7 @@ export default class WebAudio extends util.Observer {
      * Set pre-decoded peaks
      *
      * @param {number[]|Number.<Array[]>} peaks Peaks data
-     * @param {?number} duration Explicit duration
+     * @param {number?} duration Explicit duration
      */
     setPeaks(peaks, duration) {
         if (duration != null) {
@@ -376,7 +376,10 @@ export default class WebAudio extends util.Observer {
      */
     setLength(length) {
         // No resize, we can preserve the cached peaks.
-        if (this.mergedPeaks && length == 2 * this.mergedPeaks.length - 1 + 2) {
+        if (
+            this.mergedPeaks &&
+            length === 2 * this.mergedPeaks.length - 1 + 2
+        ) {
             return;
         }
 
@@ -467,11 +470,11 @@ export default class WebAudio extends util.Observer {
                 peaks[2 * i] = max;
                 peaks[2 * i + 1] = min;
 
-                if (c == 0 || max > this.mergedPeaks[2 * i]) {
+                if (c === 0 || max > this.mergedPeaks[2 * i]) {
                     this.mergedPeaks[2 * i] = max;
                 }
 
-                if (c == 0 || min < this.mergedPeaks[2 * i + 1]) {
+                if (c === 0 || min < this.mergedPeaks[2 * i + 1]) {
                     this.mergedPeaks[2 * i + 1] = min;
                 }
             }
@@ -516,9 +519,9 @@ export default class WebAudio extends util.Observer {
             // check if browser supports AudioContext.close()
             if (
                 typeof this.ac.close === 'function' &&
-                this.ac.state != 'closed'
+                this.ac.state !== 'closed'
             ) {
-                this.ac.close();
+                void this.ac.close();
             }
             // clear the reference to the audiocontext
             this.ac = null;
@@ -592,7 +595,7 @@ export default class WebAudio extends util.Observer {
      *
      * @param {number} start Position to start at in seconds
      * @param {number} end Position to end at in seconds
-     * @return {{start: number, end: number}} Object containing start and end
+     * @return {{start: number, end: number}|undefined} Object containing start and end
      * positions
      */
     seekTo(start, end) {
@@ -637,9 +640,9 @@ export default class WebAudio extends util.Observer {
     /**
      * Plays the loaded audio region.
      *
-     * @param {number} start Start offset in seconds, relative to the beginning
+     * @param {number?} start Start offset in seconds, relative to the beginning
      * of a clip.
-     * @param {number} end When to stop relative to the beginning of a clip.
+     * @param {number?} end When to stop relative to the beginning of a clip.
      */
     play(start, end) {
         if (!this.buffer) {
@@ -658,7 +661,7 @@ export default class WebAudio extends util.Observer {
 
         this.source.start(0, start, end - start);
 
-        if (this.ac.state == 'suspended') {
+        if (this.ac.state === 'suspended') {
             this.ac.resume && this.ac.resume();
         }
 
