@@ -80,8 +80,8 @@ export default class Drawer extends util.Observer {
     /**
      * Handle click event
      *
-     * @param {Event} e Click event
-     * @param {?boolean} noPrevent Set to true to not call `e.preventDefault()`
+     * @param {Event|TouchEvent|MouseEvent} e Click event
+     * @param {boolean?} noPrevent Set to true to not call `e.preventDefault()`
      * @return {number} Playback position from 0 to 1
      */
     handleEvent(e, noPrevent) {
@@ -123,7 +123,7 @@ export default class Drawer extends util.Observer {
         this.wrapper.addEventListener('click', e => {
             const scrollbarHeight =
                 this.wrapper.offsetHeight - this.wrapper.clientHeight;
-            if (scrollbarHeight != 0) {
+            if (scrollbarHeight !== 0) {
                 // scrollbar is visible.  Check if click was on it
                 const bbox = this.wrapper.getBoundingClientRect();
                 if (e.clientY >= bbox.bottom - scrollbarHeight) {
@@ -187,7 +187,7 @@ export default class Drawer extends util.Observer {
      * in steps of 5 pixels
      *
      * @param {number} position X-offset in pixels
-     * @param {boolean} immediate Set to true to immediately scroll somewhere
+     * @param {boolean?} immediate Set to true to immediately scroll somewhere
      */
     recenterOnPosition(position, immediate) {
         const scrollLeft = this.wrapper.scrollLeft;
@@ -196,7 +196,7 @@ export default class Drawer extends util.Observer {
         let target = position - half;
         let offset = target - scrollLeft;
 
-        if (maxScroll == 0) {
+        if (maxScroll === 0) {
             // no need to continue if scrollbar is not there
             return;
         }
@@ -212,7 +212,7 @@ export default class Drawer extends util.Observer {
         // limit target to valid range (0 to maxScroll)
         target = Math.max(0, Math.min(maxScroll, target));
         // no use attempting to scroll if we're not moving
-        if (target != scrollLeft) {
+        if (target !== scrollLeft) {
             this.wrapper.scrollLeft = target;
         }
     }
@@ -260,7 +260,7 @@ export default class Drawer extends util.Observer {
      * @return {boolean} Whether the width of the container was updated or not
      */
     setWidth(width) {
-        if (this.width == width) {
+        if (this.width === width) {
             return false;
         }
 
@@ -287,7 +287,7 @@ export default class Drawer extends util.Observer {
      * @return {boolean} Whether the height of the container was updated or not
      */
     setHeight(height) {
-        if (height == this.height) {
+        if (height === this.height) {
             return false;
         }
         this.height = height;

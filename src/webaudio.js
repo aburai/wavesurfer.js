@@ -593,8 +593,8 @@ export default class WebAudio extends util.Observer {
     /**
      * Used by `wavesurfer.seekTo()`
      *
-     * @param {number} start Position to start at in seconds
-     * @param {number} end Position to end at in seconds
+     * @param {number?} start Position to start at in seconds
+     * @param {number?} end Position to end at in seconds
      * @return {{start: number, end: number}|undefined} Object containing start and end
      * positions
      */
@@ -643,6 +643,7 @@ export default class WebAudio extends util.Observer {
      * @param {number?} start Start offset in seconds, relative to the beginning
      * of a clip.
      * @param {number?} end When to stop relative to the beginning of a clip.
+     * @return {Promise|undefined} Result
      */
     play(start, end) {
         if (!this.buffer) {
@@ -668,6 +669,8 @@ export default class WebAudio extends util.Observer {
         this.setState(PLAYING);
 
         this.fireEvent('play');
+
+        return Promise.resolve();
     }
 
     /**

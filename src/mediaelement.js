@@ -119,7 +119,7 @@ export default class MediaElement extends WebAudio {
      * Private method called by both `load` (from url)
      * and `loadElt` (existing media element) methods.
      *
-     * @param {HTMLMediaElement} media HTML5 Audio or Video element
+     * @param {HTMLMediaElement|HTMLElement} media HTML5 Audio or Video element
      * @param {number[]|Number.<Array[]>} peaks Array of peak data
      * @private
      */
@@ -245,13 +245,20 @@ export default class MediaElement extends WebAudio {
     /**
      * Used by `wavesurfer.seekTo()`
      *
-     * @param {number} start Position to start at in seconds
+     * @param {number?} start Position to start at in seconds
+     * @param {number?} end Position to end at in seconds
+     * @return {{start: number, end: number}|undefined} Object containing start and end
+     * positions
      */
-    seekTo(start) {
+    seekTo(start, end) {
         if (start != null) {
             this.media.currentTime = start;
         }
         this.clearPlayEnd();
+        return {
+            start: start,
+            end: end || this.getDuration()
+        };
     }
 
     /**
@@ -297,7 +304,7 @@ export default class MediaElement extends WebAudio {
     setPlayEnd(end) {
         this._onPlayEnd = time => {
             if (time >= end) {
-                this.pause();
+                void this.pause();
                 this.seekTo(end);
             }
         };
@@ -376,7 +383,7 @@ export default class MediaElement extends WebAudio {
      *
      */
     destroy() {
-        this.pause();
+        void this.pause();
         this.unAll();
 
         if (

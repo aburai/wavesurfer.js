@@ -974,14 +974,12 @@ export default class WaveSurfer extends util.Observer {
             // turn off the volume and update the mute properties
             this.savedVolume = this.backend.getVolume();
             this.backend.setVolume(0);
-            this.backend.isMuted = true;
             this.isMuted = true;
             this.fireEvent('volume', 0);
         } else {
             // If currently muted then restore to the saved volume
             // and update the mute properties
             this.backend.setVolume(this.savedVolume);
-            this.backend.isMuted = false;
             this.isMuted = false;
             this.fireEvent('volume', this.savedVolume);
         }
@@ -1273,7 +1271,7 @@ export default class WaveSurfer extends util.Observer {
      * render the peaks data in the correct size for the audio duration (as
      * befits the current `minPxPerSec` and zoom value) without having to decode
      * the audio.
-     * @returns {void}
+     * @returns {void|Observer} result
      * @example
      * // uses fetch or media element to load file (depending on backend)
      * wavesurfer.load('http://example.com/demo.wav');
@@ -1328,8 +1326,8 @@ export default class WaveSurfer extends util.Observer {
      * @private
      * @param {string} url URL of audio file
      * @param {number[]|Number.<Array[]>} peaks Peaks data
-     * @param {?number} duration Optional duration of audio file
-     * @returns {void}
+     * @param {number?} duration Optional duration of audio file
+     * @returns {void|Observer} loaded peaks
      */
     loadBuffer(url, peaks, duration) {
         const load = action => {
@@ -1356,9 +1354,9 @@ export default class WaveSurfer extends util.Observer {
      * existing HTML5 Audio/Video Element
      * @param {number[]|Number.<Array[]>} peaks Array of peaks. Required to bypass web audio
      * dependency
-     * @param {?boolean} preload Set to true if the preload attribute of the
+     * @param {boolean|string?} preload Set to true if the preload attribute of the
      * audio element should be enabled
-     * @param {?number} duration Optional duration of audio file
+     * @param {number?} duration Optional duration of audio file
      */
     loadMediaElement(urlOrElt, peaks, preload, duration) {
         let url = urlOrElt;
