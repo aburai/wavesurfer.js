@@ -96,9 +96,10 @@ class Region {
 
     /* Play the audio region. */
     play() {
-        this.wavesurfer.play(this.start, this.end);
+        const promise = this.wavesurfer.play(this.start, this.end);
         this.fireEvent('play');
         this.wavesurfer.fireEvent('region-play', this);
+        return promise;
     }
 
     /* Play the region in loop. */
@@ -230,12 +231,7 @@ class Region {
         this.firedOut = false;
 
         const onProcess = time => {
-            if (
-                !this.firedOut &&
-                this.firedIn &&
-                (this.start >= Math.round(time * 100) / 100 ||
-                    this.end <= Math.round(time * 100) / 100)
-            ) {
+            if (!this.firedOut && this.firedIn && (this.start > time || this.end <= time)) {
                 this.firedOut = true;
                 this.firedIn = false;
                 this.fireEvent('out');

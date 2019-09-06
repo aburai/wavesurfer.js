@@ -41,8 +41,6 @@ export default class MediaElement extends WebAudio {
         this.isMuted = false;
         /** @private */
         this.buffer = null;
-        /** @private */
-        this.onPlayEnd = null;
     }
 
     /**
@@ -85,7 +83,7 @@ export default class MediaElement extends WebAudio {
      * @param {string} url Path to media file
      * @param {HTMLElement} container HTML element
      * @param {number[]|Number.<Array[]>} peaks Array of peak data
-     * @param {string} preload HTML 5 preload attribute value
+     * @param {string?} preload HTML 5 preload attribute value
      */
     load(url, container, peaks, preload) {
         const media = document.createElement(this.mediaType);
@@ -121,7 +119,7 @@ export default class MediaElement extends WebAudio {
      * Private method called by both `load` (from url)
      * and `loadElt` (existing media element) methods.
      *
-     * @param {HTMLMediaElement} media HTML5 Audio or Video element
+     * @param {HTMLMediaElement|HTMLElement} media HTML5 Audio or Video element
      * @param {number[]|Number.<Array[]>} peaks Array of peak data
      * @private
      */
@@ -157,11 +155,11 @@ export default class MediaElement extends WebAudio {
             this.fireEvent('pause');
         });
 
-        media.addEventListener('seeked', event => {
+        media.addEventListener('seeked', () => {
             this.fireEvent('seek');
         });
 
-        media.addEventListener('volumechange', event => {
+        media.addEventListener('volumechange', () => {
             this.isMuted = media.muted;
             if (this.isMuted) {
                 this.volume = 0;
@@ -173,9 +171,7 @@ export default class MediaElement extends WebAudio {
 
         this.media = media;
         this.peaks = peaks;
-        this.onPlayEnd = null;
         this.buffer = null;
-        this.isMuted = media.muted;
         this.setPlaybackRate(this.playbackRate);
         this.setVolume(this.volume);
     }
@@ -254,6 +250,7 @@ export default class MediaElement extends WebAudio {
             this.media.currentTime = start;
         }
         this.clearPlayEnd();
+        this.fireEvent('audioprocess', start);
     }
 
     /**
@@ -269,7 +266,6 @@ export default class MediaElement extends WebAudio {
         this.seekTo(start);
         const promise = this.media.play();
         end && this.setPlayEnd(end);
-
         return promise;
     }
 
@@ -299,7 +295,7 @@ export default class MediaElement extends WebAudio {
     setPlayEnd(end) {
         this._onPlayEnd = time => {
             if (time >= end) {
-                this.pause();
+                void this.pause();
                 this.seekTo(end);
             }
         };

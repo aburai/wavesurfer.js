@@ -640,12 +640,12 @@ export default class WaveSurfer extends util.Observer {
         }
 
         // Back compat
-        if (this.params.backend == 'AudioElement') {
+        if (this.params.backend === 'AudioElement') {
             this.params.backend = 'MediaElement';
         }
 
         if (
-            this.params.backend == 'WebAudio' &&
+            this.params.backend === 'WebAudio' &&
             !this.Backend.prototype.supportsWebAudio.call(null)
         ) {
             this.params.backend = 'MediaElement';
@@ -676,11 +676,6 @@ export default class WaveSurfer extends util.Observer {
             this.backend.on('volume', () => {
                 let newVolume = this.getVolume();
                 this.fireEvent('volume', newVolume);
-
-                if (this.backend.isMuted !== this.isMuted) {
-                    this.isMuted = this.backend.isMuted;
-                    this.fireEvent('mute', this.isMuted);
-                }
             });
         }
     }
@@ -1352,9 +1347,8 @@ export default class WaveSurfer extends util.Observer {
      * existing HTML5 Audio/Video Element
      * @param {number[]|Number.<Array[]>} peaks Array of peaks. Required to bypass web audio
      * dependency
-     * @param {?boolean} preload Set to true if the preload attribute of the
-     * audio element should be enabled
-     * @param {?number} duration Optional duration of audio file
+     * @param {string?} preload HTML 5 preload attribute value
+     * @param {number?} duration Optional duration of audio file
      */
     loadMediaElement(urlOrElt, peaks, preload, duration) {
         let url = urlOrElt;
@@ -1429,7 +1423,7 @@ export default class WaveSurfer extends util.Observer {
      *
      * @param {string} url The URL of the file object
      * @param {function} callback The function to call on complete
-     * @returns {util.fetchFile} fetch call
+     * @returns {Observer} fetch call
      * @private
      */
     getArrayBuffer(url, callback) {
