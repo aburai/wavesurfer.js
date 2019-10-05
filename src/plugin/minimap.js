@@ -152,7 +152,7 @@ export default class MinimapPlugin {
         };
         let prevWidth = 0;
         this._onResize = ws.util.debounce(() => {
-            if (prevWidth != this.drawer.wrapper.clientWidth) {
+            if (prevWidth !== this.drawer.wrapper.clientWidth) {
                 prevWidth = this.drawer.wrapper.clientWidth;
                 this.render();
                 this.drawer.progress(
@@ -191,20 +191,17 @@ export default class MinimapPlugin {
     }
 
     regions() {
-        this.regions = {};
+        this.renderRegions();
 
         this.wavesurfer.on('region-created', region => {
-            this.regions[region.id] = region;
             this.renderRegions();
         });
 
         this.wavesurfer.on('region-updated', region => {
-            this.regions[region.id] = region;
             this.renderRegions();
         });
 
         this.wavesurfer.on('region-removed', region => {
-            delete this.regions[region.id];
             this.renderRegions();
         });
     }
@@ -216,14 +213,13 @@ export default class MinimapPlugin {
             this.drawer.wrapper.removeChild(regionElements[i]);
         }
 
-        Object.keys(this.regions).forEach(id => {
-            const region = this.regions[id];
-            const width =
-                this.getWidth() *
-                ((region.end - region.start) / this.wavesurfer.getDuration());
-            const left =
-                this.getWidth() *
-                (region.start / this.wavesurfer.getDuration());
+        const mmWidth = this.getWidth();
+        const duration = this.wavesurfer.getDuration();
+        const regionsList = this.wavesurfer.regions.list;
+        Object.keys(regionsList).forEach(id => {
+            const region = regionsList[id];
+            const width = mmWidth * ((region.end - region.start) / duration);
+            const left = mmWidth * (region.start / duration);
             const regionElement = this.util.style(
                 document.createElement('region'),
                 {
@@ -346,7 +342,7 @@ export default class MinimapPlugin {
         if (this.params.showOverview) {
             //get proportional width of overview region considering the respective
             //width of the drawers
-            this.ratio = this.wavesurfer.drawer.width / this.drawer.width;
+            this.ratio = this.wavesurfer.drawer.width / this.getWidth();
             this.waveShowedWidth = this.wavesurfer.drawer.width / this.ratio;
             this.waveWidth = this.wavesurfer.drawer.width;
             this.overviewWidth = this.drawer.container.offsetWidth / this.ratio;
@@ -378,6 +374,6 @@ export default class MinimapPlugin {
     }
 
     getWidth() {
-        return this.drawer.width / this.params.pixelRatio;
+        return this.drawer.wrapper.clientWidth / this.params.pixelRatio;
     }
 }
