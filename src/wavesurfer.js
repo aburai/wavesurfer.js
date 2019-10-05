@@ -25,7 +25,11 @@ import PeakCache from './peakcache';
  * @property {ScriptProcessorNode} audioScriptProcessor=null Use your own previously
  * initialized ScriptProcessorNode or leave blank.
  * @property {boolean} autoCenter=true If a scrollbar is present, center the
- * waveform around the progress
+ * waveform on current progress
+ * @property {number} autoCenterRate=5 If autoCenter is active, rate at which the
+ * waveform is centered
+ * @property {boolean} autoCenterImmediately=false If autoCenter is active, immediately
+ * center waveform on current progress
  * @property {string} backend='WebAudio' `'WebAudio'|'MediaElement'` In most cases
  * you don't have to set this manually. MediaElement is a fallback for
  * unsupported browsers.
@@ -204,6 +208,8 @@ export default class WaveSurfer extends util.Observer {
         audioScriptProcessor: null,
         audioRate: 1,
         autoCenter: true,
+        autoCenterRate: 5,
+        autoCenterImmediately: false,
         backend: 'WebAudio',
         backgroundColor: null,
         barHeight: 1,
@@ -392,6 +398,17 @@ export default class WaveSurfer extends util.Observer {
         /**
          * @private The uninitialised Backend class
          */
+        // Back compat
+        if (this.params.backend == 'AudioElement') {
+            this.params.backend = 'MediaElement';
+        }
+
+        if (
+            this.params.backend == 'WebAudio' &&
+            !WebAudio.prototype.supportsWebAudio.call(null)
+        ) {
+            this.params.backend = 'MediaElement';
+        }
         this.Backend = this.backends[this.params.backend];
 
         /**
@@ -637,18 +654,6 @@ export default class WaveSurfer extends util.Observer {
     createBackend() {
         if (this.backend) {
             this.backend.destroy();
-        }
-
-        // Back compat
-        if (this.params.backend === 'AudioElement') {
-            this.params.backend = 'MediaElement';
-        }
-
-        if (
-            this.params.backend === 'WebAudio' &&
-            !this.Backend.prototype.supportsWebAudio.call(null)
-        ) {
-            this.params.backend = 'MediaElement';
         }
 
         this.backend = new this.Backend(this.params);
@@ -1227,8 +1232,8 @@ export default class WaveSurfer extends util.Observer {
     loadDecodedBuffer(buffer) {
         this.backend.load(buffer);
         this.drawBuffer();
-        this.fireEvent('ready');
         this.isReady = true;
+        this.fireEvent('ready');
     }
 
     /**
@@ -1367,8 +1372,8 @@ export default class WaveSurfer extends util.Observer {
         this.tmpEvents.push(
             this.backend.once('canplay', () => {
                 this.drawBuffer();
-                this.fireEvent('ready');
                 this.isReady = true;
+                this.fireEvent('ready');
             }),
             this.backend.once('error', err => this.fireEvent('error', err))
         );
@@ -1447,7 +1452,7 @@ export default class WaveSurfer extends util.Observer {
                 this.currentRequest = null;
             }),
             request.on('error', e => {
-                this.fireEvent('error', 'fetch error: ' + e.message);
+                this.fireEvent('error', e);
                 this.currentRequest = null;
             })
         );

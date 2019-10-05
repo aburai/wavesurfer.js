@@ -1,6 +1,22 @@
 wavesurfer.js changelog
 =======================
 
+3.1.0 (26.09.2019)
+------------------
+
+- Add `autoCenter` and `autoCenterRate` options (#1699)
+- Make sure `isReady` is true before firing the `ready` event (#1749)
+- Improve fetch error messages (#1748)
+- Use `MediaElement` backend for browsers that don't support WebAudio (#1739)
+- Regions plugin:
+  - Use `isResizing` and `isDragging` to filter events in
+    region-updated listener (#1716)
+  - Fix `playLoop` and `loop` option for clips with duration <15s (#1626)
+- Spectrogram plugin: fix variable name in click handler (#1742)
+- Minimap plugin: fix left/width calculations for regions on retina/4k
+  screens (#1743)
+- New example: video-annotation (#1726)
+
 3.0.0 (11.07.2019)
 ------------------
 

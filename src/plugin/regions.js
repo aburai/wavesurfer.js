@@ -24,6 +24,9 @@ class Region {
         this.resize =
             params.resize === undefined ? true : Boolean(params.resize);
         this.drag = params.drag === undefined ? true : Boolean(params.drag);
+        // reflect resize and drag state of region for region-updated listener
+        this.isResizing = false;
+        this.isDragging = false;
         this.loop = Boolean(params.loop);
         this.color = params.color || 'rgba(0, 0, 0, 0.1)';
         this.data = params.data || {};
@@ -122,7 +125,6 @@ class Region {
             );
         }
 
-        const width = this.wrapper.scrollWidth;
         this.style(regionEl, {
             position: 'absolute',
             zIndex: 2,
@@ -231,13 +233,21 @@ class Region {
         this.firedOut = false;
 
         const onProcess = time => {
-            if (!this.firedOut && this.firedIn && (this.start > time || this.end <= time)) {
+            let start = Math.round(this.start * 10) / 10;
+            let end = Math.round(this.end * 10) / 10;
+            time = Math.round(time * 10) / 10;
+
+            if (
+                !this.firedOut &&
+                this.firedIn &&
+                (start > time || end <= time)
+            ) {
                 this.firedOut = true;
                 this.firedIn = false;
                 this.fireEvent('out');
                 this.wavesurfer.fireEvent('region-out', this);
             }
-            if (!this.firedIn && this.start <= time && this.end > time) {
+            if (!this.firedIn && start <= time && end > time) {
                 this.firedIn = true;
                 this.firedOut = false;
                 this.fireEvent('in');
@@ -355,7 +365,10 @@ class Region {
                         this.wrapper.scrollWidth - this.wrapper.clientWidth;
                     wrapperRect = this.wrapper.getBoundingClientRect();
 
-                    if (e.target.tagName.toLowerCase() == 'handle') {
+                    this.isResizing = false;
+                    this.isDragging = false;
+                    if (e.target.tagName.toLowerCase() === 'handle') {
+                        this.isResizing = true;
                         if (
                             e.target.classList.contains(
                                 'wavesurfer-handle-start'
@@ -366,6 +379,7 @@ class Region {
                             resize = 'end';
                         }
                     } else {
+                        this.isDragging = true;
                         drag = true;
                         resize = false;
                     }
@@ -376,6 +390,8 @@ class Region {
                     }
 
                     if (drag || resize) {
+                        this.isDragging = false;
+                        this.isResizing = false;
                         drag = false;
                         scrollDirection = null;
                         resize = false;
@@ -510,7 +526,7 @@ class Region {
     }
 
     onResize(delta, direction) {
-        if (direction == 'start') {
+        if (direction === 'start') {
             this.update({
                 start: Math.min(this.start + delta, this.end),
                 end: Math.max(this.start + delta, this.end)
@@ -651,6 +667,7 @@ export default class RegionsPlugin {
         // Id-based hash of regions
         this.list = {};
         this._onReady = () => {
+            this.wrapper = this.wavesurfer.drawer.wrapper;
             if (this.params.dragSelection) {
                 this.enableDragSelection(this.params);
             }
