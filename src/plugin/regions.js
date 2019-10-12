@@ -147,14 +147,13 @@ class Region {
                 position: 'absolute',
                 left: '0px',
                 top: '0px',
-                width: '1%',
-                maxWidth: '4px',
+                width: '4px',
                 height: '100%'
             };
             this.style(handleLeft, css);
             this.style(handleRight, css);
             this.style(handleRight, {
-                left: '100%'
+                left: 'calc(100% - 4px)'
             });
         }
 
@@ -182,15 +181,19 @@ class Region {
     updateRender() {
         // duration varies during loading process, so don't overwrite important data
         const dur = this.wavesurfer.getDuration();
+        if (!dur) return;
+
         const width = this.getWidth();
 
-        var startLimited = this.start;
-        var endLimited = this.end;
+        let startLimited = this.start;
+        let endLimited = this.end;
         if (startLimited < 0) {
             startLimited = 0;
             endLimited = endLimited - startLimited;
         }
+        // prevent region end outside wave constraints
         if (endLimited > dur) {
+            this.end = dur; // fix region prop for calculations
             endLimited = dur;
             startLimited = dur - (endLimited - startLimited);
         }
@@ -412,14 +415,14 @@ class Region {
                     }
                     if (
                         e.targetTouches &&
-                        e.targetTouches[0].identifier != touchId
+                        e.targetTouches[0].identifier !== touchId
                     ) {
                         return;
                     }
 
                     if (drag || resize) {
                         const oldTime = startTime;
-                        const time = this.wavesurfer.regions.util.getRegionSnapToGridValue(
+                        const time = this.util.getRegionSnapToGridValue(
                             this.wavesurfer.drawer.handleEvent(e) * duration
                         );
 
@@ -831,7 +834,7 @@ export default class RegionsPlugin {
             if (e.touches && e.touches.length > 1) {
                 return;
             }
-            if (e.targetTouches && e.targetTouches[0].identifier != touchId) {
+            if (e.targetTouches && e.targetTouches[0].identifier !== touchId) {
                 return;
             }
 

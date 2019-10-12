@@ -11,8 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
         waveColor: '#A8DBA8',
         progressColor: '#3B8686',
         backend: 'MediaElement',
+        responsive: true,
+        fillParent: true,
+        scrollParent: true,
         plugins: [
             WaveSurfer.regions.create({
+                dragSelection: true,
                 regions: [
                     {
                         start: 0,
@@ -28,6 +32,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }),
             WaveSurfer.timeline.create({
                 container: '#timeline'
+            }),
+            WaveSurfer.minimap.create({
+                container: '#minimap',
+                showRegions: true,
+                showOverview: true,
+                hideScrollbar: true,
+                overviewFullWidth: false
             })
         ]
     });

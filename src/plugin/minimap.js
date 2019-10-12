@@ -63,6 +63,9 @@ export default class MinimapPlugin {
                 showOverview: false,
                 overviewBorderColor: 'green',
                 overviewBorderSize: 2,
+                // always show overview, set to false to show only
+                // when scrolling is available
+                overviewFullWidth: true,
                 // the container should be different
                 container: false,
                 height: Math.max(Math.round(ws.params.height / 4), 20)
@@ -191,48 +194,52 @@ export default class MinimapPlugin {
     }
 
     regions() {
-        this.renderRegions();
+        this.createRegions();
 
-        this.wavesurfer.on('region-created', region => {
-            this.renderRegions();
-        });
+        this.wavesurfer.on('region-created', this.addRegion.bind(this));
 
-        this.wavesurfer.on('region-updated', region => {
-            this.renderRegions();
-        });
+        this.wavesurfer.on('region-updated', this.renderRegion.bind(this));
 
         this.wavesurfer.on('region-removed', region => {
-            this.renderRegions();
+            const regEl = this.drawer.wrapper.querySelector(`.${region.id}`);
+            if (regEl) this.drawer.wrapper.removeChild(regEl);
         });
     }
 
-    renderRegions() {
-        const regionElements = this.drawer.wrapper.querySelectorAll('region');
-        let i;
-        for (i = 0; i < regionElements.length; ++i) {
-            this.drawer.wrapper.removeChild(regionElements[i]);
-        }
+    createRegions() {
+        const regionsList = this.wavesurfer.regions.list;
+        Object.keys(regionsList).forEach(id => {
+            this.addRegion(regionsList[id]);
+        });
+    }
+    addRegion(region) {
+        const regionElement = document.createElement('region');
+        regionElement.classList.add(region.id);
+        this.util.style(regionElement, {
+            height: 'inherit',
+            backgroundColor: region.color,
+            display: 'block',
+            position: 'absolute'
+        });
+        this.renderRegion(region, regionElement);
+        this.drawer.wrapper.appendChild(regionElement);
+    }
+    renderRegion(region, regionElement) {
+        regionElement =
+            regionElement || this.drawer.wrapper.querySelector(`.${region.id}`);
+        if (!regionElement) return;
 
         const mmWidth = this.getWidth();
         const duration = this.wavesurfer.getDuration();
-        const regionsList = this.wavesurfer.regions.list;
-        Object.keys(regionsList).forEach(id => {
-            const region = regionsList[id];
-            const width = mmWidth * ((region.end - region.start) / duration);
-            const left = mmWidth * (region.start / duration);
-            const regionElement = this.util.style(
-                document.createElement('region'),
-                {
-                    height: 'inherit',
-                    backgroundColor: region.color,
-                    width: width + 'px',
-                    left: left + 'px',
-                    display: 'block',
-                    position: 'absolute'
-                }
-            );
-            regionElement.classList.add(id);
-            this.drawer.wrapper.appendChild(regionElement);
+        if (!duration) return;
+
+        let width = mmWidth * ((region.end - region.start) / duration);
+        const left = mmWidth * (region.start / duration);
+        if (left + width > mmWidth) width = mmWidth - left;
+        this.util.style(regionElement, {
+            backgroundColor: region.color,
+            width: width + 'px',
+            left: left + 'px'
         });
     }
 
@@ -340,8 +347,8 @@ export default class MinimapPlugin {
         this.drawer.progress(this.wavesurfer.backend.getPlayedPercents());
 
         if (this.params.showOverview) {
-            //get proportional width of overview region considering the respective
-            //width of the drawers
+            // get proportional width of overview region considering the respective
+            // width of the drawers
             this.ratio = this.wavesurfer.drawer.width / this.getWidth();
             this.waveShowedWidth = this.wavesurfer.drawer.width / this.ratio;
             this.waveWidth = this.wavesurfer.drawer.width;
@@ -350,6 +357,9 @@ export default class MinimapPlugin {
             this.moveOverviewRegion(
                 this.wavesurfer.drawer.wrapper.scrollLeft / this.ratio
             );
+            if (!this.params.overviewFullWidth)
+                this.overviewRegion.style.display =
+                    this.ratio === 1 ? 'none' : 'block';
             this.overviewRegion.style.width = this.overviewWidth + 'px';
         }
     }
