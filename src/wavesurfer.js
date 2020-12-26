@@ -1264,9 +1264,9 @@ export default class WaveSurfer extends util.Observer {
      * audio element with the audio
      * @param {number[]|Number.<Array[]>} peaks Wavesurfer does not have to decode
      * the audio to render the waveform if this is specified
-     * @param {?string} preload (Use with backend `MediaElement`)
+     * @param {string?} preload (Use with backend `MediaElement`)
      * `'none'|'metadata'|'auto'` Preload attribute for the media element
-     * @param {?number} duration The duration of the audio. This is used to
+     * @param {number?} duration The duration of the audio. This is used to
      * render the peaks data in the correct size for the audio duration (as
      * befits the current `minPxPerSec` and zoom value) without having to decode
      * the audio.
@@ -1415,7 +1415,7 @@ export default class WaveSurfer extends util.Observer {
             data => {
                 // Only use the decoded data if we haven't been destroyed or
                 // another decode started in the meantime
-                if (!this.isDestroyed && this.arraybuffer == arraybuffer) {
+                if (!this.isDestroyed && this.arraybuffer === arraybuffer) {
                     callback(data);
                     this.arraybuffer = null;
                 }

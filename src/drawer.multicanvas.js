@@ -142,7 +142,7 @@ export default class MultiCanvas extends Drawer {
         let canvasWidth = this.maxCanvasWidth + this.overlap;
         const lastCanvas = this.canvases.length - 1;
         this.canvases.forEach((entry, i) => {
-            if (i == lastCanvas) {
+            if (i === lastCanvas) {
                 canvasWidth = this.width - this.maxCanvasWidth * lastCanvas;
             }
             this.updateDimensions(entry, canvasWidth, this.height);

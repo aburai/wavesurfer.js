@@ -265,7 +265,7 @@ export default class Drawer extends util.Observer {
      * @return {boolean} Whether the width of the container was updated or not
      */
     setWidth(width) {
-        if (this.width == width) {
+        if (this.width === width) {
             return false;
         }
 
@@ -292,7 +292,7 @@ export default class Drawer extends util.Observer {
      * @return {boolean} Whether the height of the container was updated or not
      */
     setHeight(height) {
-        if (height == this.height) {
+        if (height === this.height) {
             return false;
         }
         this.height = height;

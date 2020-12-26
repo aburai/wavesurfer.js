@@ -360,7 +360,7 @@ export default class WebAudio extends util.Observer {
      * Set pre-decoded peaks
      *
      * @param {number[]|Number.<Array[]>} peaks Peaks data
-     * @param {?number} duration Explicit duration
+     * @param {number?} duration Explicit duration
      */
     setPeaks(peaks, duration) {
         if (duration != null) {
@@ -376,7 +376,10 @@ export default class WebAudio extends util.Observer {
      */
     setLength(length) {
         // No resize, we can preserve the cached peaks.
-        if (this.mergedPeaks && length == 2 * this.mergedPeaks.length - 1 + 2) {
+        if (
+            this.mergedPeaks &&
+            length === 2 * this.mergedPeaks.length - 1 + 2
+        ) {
             return;
         }
 
@@ -388,11 +391,15 @@ export default class WebAudio extends util.Observer {
         let c;
         for (c = 0; c < channels; c++) {
             this.splitPeaks[c] = [];
-            this.splitPeaks[c][2 * (length - 1)] = 0;
-            this.splitPeaks[c][2 * (length - 1) + 1] = 0;
+            if (length) {
+                this.splitPeaks[c][2 * (length - 1)] = 0;
+                this.splitPeaks[c][2 * (length - 1) + 1] = 0;
+            }
         }
-        this.mergedPeaks[2 * (length - 1)] = 0;
-        this.mergedPeaks[2 * (length - 1) + 1] = 0;
+        if (length) {
+            this.mergedPeaks[2 * (length - 1)] = 0;
+            this.mergedPeaks[2 * (length - 1) + 1] = 0;
+        }
     }
 
     /**
@@ -467,11 +474,11 @@ export default class WebAudio extends util.Observer {
                 peaks[2 * i] = max;
                 peaks[2 * i + 1] = min;
 
-                if (c == 0 || max > this.mergedPeaks[2 * i]) {
+                if (c === 0 || max > this.mergedPeaks[2 * i]) {
                     this.mergedPeaks[2 * i] = max;
                 }
 
-                if (c == 0 || min < this.mergedPeaks[2 * i + 1]) {
+                if (c === 0 || min < this.mergedPeaks[2 * i + 1]) {
                     this.mergedPeaks[2 * i + 1] = min;
                 }
             }
@@ -516,7 +523,7 @@ export default class WebAudio extends util.Observer {
             // check if browser supports AudioContext.close()
             if (
                 typeof this.ac.close === 'function' &&
-                this.ac.state != 'closed'
+                this.ac.state !== 'closed'
             ) {
                 this.ac.close();
             }
