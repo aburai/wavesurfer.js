@@ -494,10 +494,14 @@ class Region {
                 };
 
                 this.element.addEventListener('mousedown', onDown);
-                this.element.addEventListener('touchstart', onDown);
+                this.element.addEventListener('touchstart', onDown, {
+                    passive: true
+                });
 
                 this.wrapper.addEventListener('mousemove', onMove);
-                this.wrapper.addEventListener('touchmove', onMove);
+                this.wrapper.addEventListener('touchmove', onMove, {
+                    passive: true
+                });
 
                 document.body.addEventListener('mouseup', onUp);
                 document.body.addEventListener('touchend', onUp);
