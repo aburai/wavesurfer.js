@@ -846,8 +846,8 @@ export default class WaveSurfer extends util.Observer {
         if (
             typeof progress !== 'number' ||
             !isFinite(progress) ||
-            progress < 0 ||
-            progress > 1
+            Math.ceil(progress) < 0 ||
+            Math.floor(progress) > 1
         ) {
             throw new Error(
                 'Error calling wavesurfer.seekTo, parameter must be a number between 0 and 1!'

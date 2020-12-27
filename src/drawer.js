@@ -81,7 +81,7 @@ export default class Drawer extends util.Observer {
      * Handle click event
      *
      * @param {Event} e Click event
-     * @param {?boolean} noPrevent Set to true to not call `e.preventDefault()`
+     * @param {boolean?} noPrevent Set to true to not call `e.preventDefault()`
      * @return {number} Playback position from 0 to 1
      */
     handleEvent(e, noPrevent) {
@@ -123,7 +123,7 @@ export default class Drawer extends util.Observer {
         this.wrapper.addEventListener('click', e => {
             const scrollbarHeight =
                 this.wrapper.offsetHeight - this.wrapper.clientHeight;
-            if (scrollbarHeight != 0) {
+            if (scrollbarHeight !== 0) {
                 // scrollbar is visible.  Check if click was on it
                 const bbox = this.wrapper.getBoundingClientRect();
                 if (e.clientY >= bbox.bottom - scrollbarHeight) {

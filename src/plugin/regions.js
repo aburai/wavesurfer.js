@@ -423,7 +423,8 @@ class Region {
                     if (drag || resize) {
                         const oldTime = startTime;
                         const time = this.util.getRegionSnapToGridValue(
-                            this.wavesurfer.drawer.handleEvent(e) * duration
+                            this.wavesurfer.drawer.handleEvent(e, true) *
+                                duration
                         );
 
                         const delta = time - startTime;
@@ -848,7 +849,8 @@ export default class RegionsPlugin {
                 region = this.add(params || {});
             }
 
-            const end = this.wavesurfer.drawer.handleEvent(e);
+            // do not prevent default, eventMove is passive handler for touchmove
+            const end = this.wavesurfer.drawer.handleEvent(e, true);
             const startUpdate = this.wavesurfer.regions.util.getRegionSnapToGridValue(
                 start * duration
             );
