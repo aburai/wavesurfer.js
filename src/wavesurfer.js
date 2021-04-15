@@ -156,7 +156,7 @@ class PluginClass {
      *
      * @param {Object} params={} The plugin params (specific to the plugin)
      */
-    create(params) {}
+    static create(params) {}
     /**
      * Construct the plugin
      *
@@ -341,7 +341,7 @@ export default class WaveSurfer extends util.Observer {
 
         if (this.params.maxCanvasWidth <= 1) {
             throw new Error('maxCanvasWidth must be greater than 1');
-        } else if (this.params.maxCanvasWidth % 2 == 1) {
+        } else if (this.params.maxCanvasWidth % 2 === 1) {
             throw new Error('maxCanvasWidth must be an even number');
         }
 
@@ -399,12 +399,12 @@ export default class WaveSurfer extends util.Observer {
          * @private The uninitialised Backend class
          */
         // Back compat
-        if (this.params.backend == 'AudioElement') {
+        if (this.params.backend === 'AudioElement') {
             this.params.backend = 'MediaElement';
         }
 
         if (
-            this.params.backend == 'WebAudio' &&
+            this.params.backend === 'WebAudio' &&
             !WebAudio.prototype.supportsWebAudio.call(null)
         ) {
             this.params.backend = 'MediaElement';
@@ -1595,8 +1595,8 @@ export default class WaveSurfer extends util.Observer {
                 true
             );
         }
-        this.backend.destroy();
-        this.drawer.destroy();
+        if (this.backend) this.backend.destroy();
+        if (this.drawer) this.drawer.destroy();
         this.isDestroyed = true;
         this.isReady = false;
         this.arraybuffer = null;

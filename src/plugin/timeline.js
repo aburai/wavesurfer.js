@@ -355,10 +355,10 @@ export default class TimelinePlugin {
         const duration =
             this.wavesurfer.timeline.params.duration ||
             this.wavesurfer.backend.getDuration();
-
         if (duration <= 0) {
             return;
         }
+
         const wsParams = this.wavesurfer.params;
         const fontSize = this.params.fontSize * wsParams.pixelRatio;
         const totalSeconds = parseInt(duration, 10) + 1;
@@ -371,7 +371,7 @@ export default class TimelinePlugin {
             this.params.height *
             (this.params.notchPercentHeight / 100) *
             this.pixelRatio;
-        const pixelsPerSecond = width / duration;
+        const pixelsPerSecond = width / totalSeconds;
 
         const formatTime = this.params.formatTimeCallback;
         // if parameter is function, call the function with
@@ -463,7 +463,7 @@ export default class TimelinePlugin {
     /**
      * Set the canvas font
      *
-     * @param {DOMString} font Font to use
+     * @param {DOMString|string} font Font to use
      * @private
      */
     setFonts(font) {
@@ -541,13 +541,13 @@ export default class TimelinePlugin {
      *
      * @param {number} seconds Seconds to format
      * @param {number} pxPerSec Pixels per second
-     * @returns {number} Time
+     * @returns {number|string} Time
      */
     defaultFormatTimeCallback(seconds, pxPerSec) {
-        if (seconds / 60 > 1) {
+        if (seconds / 60 >= 1) {
             // calculate minutes and seconds from seconds count
-            const minutes = parseInt(seconds / 60, 10);
-            seconds = parseInt(seconds % 60, 10);
+            const minutes = Math.floor(seconds / 60);
+            seconds = Math.floor(seconds % 60);
             // fill up seconds with zeroes
             seconds = seconds < 10 ? '0' + seconds : seconds;
             return `${minutes}:${seconds}`;

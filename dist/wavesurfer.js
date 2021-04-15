@@ -1,5 +1,5 @@
 /*!
- * wavesurfer.js 3.0.0 (2019-09-06)
+ * wavesurfer.js 3.1.0 (2021-04-15)
  * https://github.com/katspaugh/wavesurfer.js
  * @license BSD-3-Clause
  */
@@ -216,9 +216,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * The `MultiCanvas` renderer uses one or more `CanvasEntry` instances to
  * render a waveform, depending on the zoom level.
  */
-var CanvasEntry =
-/*#__PURE__*/
-function () {
+var CanvasEntry = /*#__PURE__*/function () {
   function CanvasEntry() {
     _classCallCheck(this, CanvasEntry);
 
@@ -537,6 +535,8 @@ module.exports = exports.default;
 "use strict";
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -544,9 +544,9 @@ exports.default = void 0;
 
 var util = _interopRequireWildcard(__webpack_require__(/*! ./util */ "./src/util/index.js"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -554,25 +554,29 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 /**
  * Parent class for renderers
  *
  * @extends {Observer}
  */
-var Drawer =
-/*#__PURE__*/
-function (_util$Observer) {
+var Drawer = /*#__PURE__*/function (_util$Observer) {
   _inherits(Drawer, _util$Observer);
+
+  var _super = _createSuper(Drawer);
 
   /**
    * @param {HTMLElement} container The container node of the wavesurfer instance
@@ -583,7 +587,7 @@ function (_util$Observer) {
 
     _classCallCheck(this, Drawer);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Drawer).call(this));
+    _this = _super.call(this);
     /** @private */
 
     _this.container = container;
@@ -661,7 +665,7 @@ function (_util$Observer) {
      * Handle click event
      *
      * @param {Event} e Click event
-     * @param {?boolean} noPrevent Set to true to not call `e.preventDefault()`
+     * @param {boolean?} noPrevent Set to true to not call `e.preventDefault()`
      * @return {number} Playback position from 0 to 1
      */
 
@@ -699,7 +703,7 @@ function (_util$Observer) {
       this.wrapper.addEventListener('click', function (e) {
         var scrollbarHeight = _this2.wrapper.offsetHeight - _this2.wrapper.clientHeight;
 
-        if (scrollbarHeight != 0) {
+        if (scrollbarHeight !== 0) {
           // scrollbar is visible.  Check if click was on it
           var bbox = _this2.wrapper.getBoundingClientRect();
 
@@ -778,15 +782,18 @@ function (_util$Observer) {
       var target = position - half;
       var offset = target - scrollLeft;
 
-      if (maxScroll == 0) {
+      if (maxScroll === 0) {
         // no need to continue if scrollbar is not there
         return;
       } // if the cursor is currently visible...
 
 
       if (!immediate && -half <= offset && offset < half) {
-        // we'll limit the "re-center" rate.
-        var rate = 5;
+        // set rate at which waveform is centered
+        var rate = this.params.autoCenterRate; // make rate depend on width of view and length of waveform
+
+        rate /= half;
+        rate *= maxScroll;
         offset = Math.max(-rate, Math.min(rate, offset));
         target = scrollLeft + offset;
       } // limit target to valid range (0 to maxScroll)
@@ -794,7 +801,7 @@ function (_util$Observer) {
 
       target = Math.max(0, Math.min(maxScroll, target)); // no use attempting to scroll if we're not moving
 
-      if (target != scrollLeft) {
+      if (target !== scrollLeft) {
         this.wrapper.scrollLeft = target;
       }
     }
@@ -846,7 +853,7 @@ function (_util$Observer) {
   }, {
     key: "setWidth",
     value: function setWidth(width) {
-      if (this.width == width) {
+      if (this.width === width) {
         return false;
       }
 
@@ -875,7 +882,7 @@ function (_util$Observer) {
   }, {
     key: "setHeight",
     value: function setHeight(height) {
-      if (height == this.height) {
+      if (height === this.height) {
         return false;
       }
 
@@ -903,7 +910,7 @@ function (_util$Observer) {
 
         if (this.params.scrollParent && this.params.autoCenter) {
           var newPos = ~~(this.wrapper.scrollWidth * _progress);
-          this.recenterOnPosition(newPos);
+          this.recenterOnPosition(newPos, this.params.autoCenterImmediately);
         }
 
         this.updateProgress(pos);
@@ -919,7 +926,7 @@ function (_util$Observer) {
       this.unAll();
 
       if (this.wrapper) {
-        if (this.wrapper.parentNode == this.container) {
+        if (this.wrapper.parentNode === this.container) {
           this.container.removeChild(this.wrapper);
         }
 
@@ -1019,6 +1026,8 @@ module.exports = exports.default;
 "use strict";
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -1030,11 +1039,11 @@ var util = _interopRequireWildcard(__webpack_require__(/*! ./util */ "./src/util
 
 var _drawer2 = _interopRequireDefault(__webpack_require__(/*! ./drawer.canvasentry */ "./src/drawer.canvasentry.js"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1042,15 +1051,19 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 /**
  * MultiCanvas renderer for wavesurfer. Is currently the default and sole
@@ -1059,10 +1072,10 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
  * A `MultiCanvas` consists of one or more `CanvasEntry` instances, depending
  * on the zoom level.
  */
-var MultiCanvas =
-/*#__PURE__*/
-function (_Drawer) {
+var MultiCanvas = /*#__PURE__*/function (_Drawer) {
   _inherits(MultiCanvas, _Drawer);
+
+  var _super = _createSuper(MultiCanvas);
 
   /**
    * @param {HTMLElement} container The container node of the wavesurfer instance
@@ -1073,7 +1086,7 @@ function (_Drawer) {
 
     _classCallCheck(this, MultiCanvas);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MultiCanvas).call(this, container, params));
+    _this = _super.call(this, container, params);
     /**
      * @type {number}
      * @private
@@ -1204,7 +1217,7 @@ function (_Drawer) {
       var canvasWidth = this.maxCanvasWidth + this.overlap;
       var lastCanvas = this.canvases.length - 1;
       this.canvases.forEach(function (entry, i) {
-        if (i == lastCanvas) {
+        if (i === lastCanvas) {
           canvasWidth = _this2.width - _this2.maxCanvasWidth * lastCanvas;
         }
 
@@ -1608,6 +1621,8 @@ module.exports = exports.default;
 "use strict";
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -1617,11 +1632,11 @@ var _webaudio = _interopRequireDefault(__webpack_require__(/*! ./webaudio */ "./
 
 var util = _interopRequireWildcard(__webpack_require__(/*! ./util */ "./src/util/index.js"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1629,27 +1644,31 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
 
 function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 /**
  * MediaElement backend
  */
-var MediaElement =
-/*#__PURE__*/
-function (_WebAudio) {
+var MediaElement = /*#__PURE__*/function (_WebAudio) {
   _inherits(MediaElement, _WebAudio);
+
+  var _super = _createSuper(MediaElement);
 
   /**
    * Construct the backend
@@ -1661,7 +1680,7 @@ function (_WebAudio) {
 
     _classCallCheck(this, MediaElement);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MediaElement).call(this, params));
+    _this = _super.call(this, params);
     /** @private */
 
     _this.params = params; // Dummy media to catch errors
@@ -2128,9 +2147,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  *
  * Is used if the option parameter `partialRender` is set to `true`
  */
-var PeakCache =
-/*#__PURE__*/
-function () {
+var PeakCache = /*#__PURE__*/function () {
   /**
    * Instantiate cache
    */
@@ -2446,9 +2463,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var ProgressHandler =
-/*#__PURE__*/
-function () {
+var ProgressHandler = /*#__PURE__*/function () {
   /**
    * Instantiate ProgressHandler
    *
@@ -2972,9 +2987,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 /**
  * Observer class
  */
-var Observer =
-/*#__PURE__*/
-function () {
+var Observer = /*#__PURE__*/function () {
   /**
    * Instantiate Observer
    */
@@ -3220,6 +3233,7 @@ exports.default = style;
  * @return {HTMLElement} el
  */
 function style(el, styles) {
+  if (!el) return el;
   Object.keys(styles).forEach(function (prop) {
     if (el.style[prop] !== styles[prop]) {
       el.style[prop] = styles[prop];
@@ -3242,6 +3256,8 @@ module.exports = exports.default;
 "use strict";
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -3259,19 +3275,23 @@ var _peakcache = _interopRequireDefault(__webpack_require__(/*! ./peakcache */ "
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3306,7 +3326,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  * @property {ScriptProcessorNode} audioScriptProcessor=null Use your own previously
  * initialized ScriptProcessorNode or leave blank.
  * @property {boolean} autoCenter=true If a scrollbar is present, center the
- * waveform around the progress
+ * waveform on current progress
+ * @property {number} autoCenterRate=5 If autoCenter is active, rate at which the
+ * waveform is centered
+ * @property {boolean} autoCenterImmediately=false If autoCenter is active, immediately
+ * center waveform on current progress
  * @property {string} backend='WebAudio' `'WebAudio'|'MediaElement'` In most cases
  * you don't have to set this manually. MediaElement is a fallback for
  * unsupported browsers.
@@ -3422,32 +3446,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  *
  * @extends {Observer}
  */
-var PluginClass =
-/*#__PURE__*/
-function () {
-  _createClass(PluginClass, [{
-    key: "create",
-
-    /**
-     * Plugin definition factory
-     *
-     * This function must be used to create a plugin definition which can be
-     * used by wavesurfer to correctly instantiate the plugin.
-     *
-     * It returns a `PluginDefinition` object representing the plugin.
-     *
-     * @param {Object} params={} The plugin params (specific to the plugin)
-     */
-    value: function create(params) {}
-    /**
-     * Construct the plugin
-     *
-     * @param {Object} params={} The plugin params (specific to the plugin)
-     * @param {Object} ws The wavesurfer instance
-     */
-
-  }]);
-
+var PluginClass = /*#__PURE__*/function () {
+  /**
+   * Construct the plugin
+   *
+   * @param {Object} params={} The plugin params (specific to the plugin)
+   * @param {Object} ws The wavesurfer instance
+   */
   function PluginClass(params, ws) {
     _classCallCheck(this, PluginClass);
   }
@@ -3472,6 +3477,20 @@ function () {
   }, {
     key: "destroy",
     value: function destroy() {}
+  }], [{
+    key: "create",
+    value:
+    /**
+     * Plugin definition factory
+     *
+     * This function must be used to create a plugin definition which can be
+     * used by wavesurfer to correctly instantiate the plugin.
+     *
+     * It returns a `PluginDefinition` object representing the plugin.
+     *
+     * @param {Object} params={} The plugin params (specific to the plugin)
+     */
+    function create(params) {}
   }]);
 
   return PluginClass;
@@ -3499,39 +3518,10 @@ function () {
  */
 
 
-var WaveSurfer =
-/*#__PURE__*/
-function (_util$Observer) {
+var WaveSurfer = /*#__PURE__*/function (_util$Observer) {
   _inherits(WaveSurfer, _util$Observer);
 
-  _createClass(WaveSurfer, null, [{
-    key: "create",
-
-    /** @private */
-
-    /** @private */
-
-    /**
-     * Instantiate this class, call its `init` function and returns it
-     *
-     * @param {WavesurferParams} params The wavesurfer parameters
-     * @return {Object} WaveSurfer instance
-     * @example const wavesurfer = WaveSurfer.create(params);
-     */
-    value: function create(params) {
-      var wavesurfer = new WaveSurfer(params);
-      return wavesurfer.init();
-    }
-    /**
-     * The library version number is available as a static property of the
-     * WaveSurfer class
-     *
-     * @type {String}
-     * @example
-     * console.log('Using wavesurfer.js ' + WaveSurfer.VERSION);
-     */
-
-  }]);
+  var _super = _createSuper(WaveSurfer);
 
   /**
    * Initialise wavesurfer instance
@@ -3546,7 +3536,7 @@ function (_util$Observer) {
 
     _classCallCheck(this, WaveSurfer);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(WaveSurfer).call(this));
+    _this = _super.call(this);
     /**
      * Extract relevant parameters (or defaults)
      * @private
@@ -3557,6 +3547,8 @@ function (_util$Observer) {
       audioScriptProcessor: null,
       audioRate: 1,
       autoCenter: true,
+      autoCenterRate: 5,
+      autoCenterImmediately: false,
       backend: 'WebAudio',
       backgroundColor: null,
       barHeight: 1,
@@ -3623,7 +3615,7 @@ function (_util$Observer) {
 
     if (_this.params.maxCanvasWidth <= 1) {
       throw new Error('maxCanvasWidth must be greater than 1');
-    } else if (_this.params.maxCanvasWidth % 2 == 1) {
+    } else if (_this.params.maxCanvasWidth % 2 === 1) {
       throw new Error('maxCanvasWidth must be an even number');
     }
 
@@ -3688,6 +3680,15 @@ function (_util$Observer) {
     /**
      * @private The uninitialised Backend class
      */
+    // Back compat
+
+    if (_this.params.backend === 'AudioElement') {
+      _this.params.backend = 'MediaElement';
+    }
+
+    if (_this.params.backend === 'WebAudio' && !_webaudio.default.prototype.supportsWebAudio.call(null)) {
+      _this.params.backend = 'MediaElement';
+    }
 
     _this.Backend = _this.backends[_this.params.backend];
     /**
@@ -3711,7 +3712,7 @@ function (_util$Observer) {
 
     var prevWidth = 0;
     _this._onResize = util.debounce(function () {
-      if (prevWidth != _this.drawer.wrapper.clientWidth && !_this.params.scrollParent) {
+      if (_this.drawer.wrapper && prevWidth !== _this.drawer.wrapper.clientWidth && !_this.params.scrollParent) {
         prevWidth = _this.drawer.wrapper.clientWidth;
 
         _this.drawer.fireEvent('redraw');
@@ -3954,15 +3955,6 @@ function (_util$Observer) {
 
       if (this.backend) {
         this.backend.destroy();
-      } // Back compat
-
-
-      if (this.params.backend === 'AudioElement') {
-        this.params.backend = 'MediaElement';
-      }
-
-      if (this.params.backend === 'WebAudio' && !this.Backend.prototype.supportsWebAudio.call(null)) {
-        this.params.backend = 'MediaElement';
       }
 
       this.backend = new this.Backend(this.params);
@@ -4186,7 +4178,7 @@ function (_util$Observer) {
       var _this8 = this;
 
       // return an error if progress is not a number between 0 and 1
-      if (typeof progress !== 'number' || !isFinite(progress) || progress < 0 || progress > 1) {
+      if (typeof progress !== 'number' || !isFinite(progress) || Math.ceil(progress) < 0 || Math.floor(progress) > 1) {
         throw new Error('Error calling wavesurfer.seekTo, parameter must be a number between 0 and 1!');
       }
 
@@ -4612,8 +4604,8 @@ function (_util$Observer) {
     value: function loadDecodedBuffer(buffer) {
       this.backend.load(buffer);
       this.drawBuffer();
-      this.fireEvent('ready');
       this.isReady = true;
+      this.fireEvent('ready');
     }
     /**
      * Loads audio data from a Blob or File object
@@ -4648,9 +4640,9 @@ function (_util$Observer) {
      * audio element with the audio
      * @param {number[]|Number.<Array[]>} peaks Wavesurfer does not have to decode
      * the audio to render the waveform if this is specified
-     * @param {?string} preload (Use with backend `MediaElement`)
+     * @param {string?} preload (Use with backend `MediaElement`)
      * `'none'|'metadata'|'auto'` Preload attribute for the media element
-     * @param {?number} duration The duration of the audio. This is used to
+     * @param {number?} duration The duration of the audio. This is used to
      * render the peaks data in the correct size for the audio duration (as
      * befits the current `minPxPerSec` and zoom value) without having to decode
      * the audio.
@@ -4767,9 +4759,9 @@ function (_util$Observer) {
       this.tmpEvents.push(this.backend.once('canplay', function () {
         _this12.drawBuffer();
 
-        _this12.fireEvent('ready');
-
         _this12.isReady = true;
+
+        _this12.fireEvent('ready');
       }), this.backend.once('error', function (err) {
         return _this12.fireEvent('error', err);
       })); // If no pre-decoded peaks provided or pre-decoded peaks are
@@ -4811,7 +4803,7 @@ function (_util$Observer) {
       this.backend.decodeArrayBuffer(arraybuffer, function (data) {
         // Only use the decoded data if we haven't been destroyed or
         // another decode started in the meantime
-        if (!_this13.isDestroyed && _this13.arraybuffer == arraybuffer) {
+        if (!_this13.isDestroyed && _this13.arraybuffer === arraybuffer) {
           callback(data);
           _this13.arraybuffer = null;
         }
@@ -4845,7 +4837,7 @@ function (_util$Observer) {
         callback(data);
         _this14.currentRequest = null;
       }), request.on('error', function (e) {
-        _this14.fireEvent('error', 'fetch error: ' + e.message);
+        _this14.fireEvent('error', e);
 
         _this14.currentRequest = null;
       }));
@@ -5005,19 +4997,46 @@ function (_util$Observer) {
         window.removeEventListener('orientationchange', this._onResize, true);
       }
 
-      this.backend.destroy();
-      this.drawer.destroy();
+      if (this.backend) this.backend.destroy();
+      if (this.drawer) this.drawer.destroy();
       this.isDestroyed = true;
       this.isReady = false;
       this.arraybuffer = null;
     }
+  }], [{
+    key: "create",
+    value:
+    /** @private */
+
+    /** @private */
+
+    /**
+     * Instantiate this class, call its `init` function and returns it
+     *
+     * @param {WavesurferParams} params The wavesurfer parameters
+     * @return {Object} WaveSurfer instance
+     * @example const wavesurfer = WaveSurfer.create(params);
+     */
+    function create(params) {
+      var wavesurfer = new WaveSurfer(params);
+      return wavesurfer.init();
+    }
+    /**
+     * The library version number is available as a static property of the
+     * WaveSurfer class
+     *
+     * @type {String}
+     * @example
+     * console.log('Using wavesurfer.js ' + WaveSurfer.VERSION);
+     */
+
   }]);
 
   return WaveSurfer;
 }(util.Observer);
 
 exports.default = WaveSurfer;
-WaveSurfer.VERSION = "3.0.0";
+WaveSurfer.VERSION = "3.1.0";
 WaveSurfer.util = util;
 module.exports = exports.default;
 
@@ -5033,6 +5052,8 @@ module.exports = exports.default;
 "use strict";
 
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -5040,19 +5061,13 @@ exports.default = void 0;
 
 var util = _interopRequireWildcard(__webpack_require__(/*! ./util */ "./src/util/index.js"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
@@ -5061,6 +5076,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 // using constants to prevent someone writing the string wrong
 var PLAYING = 'playing';
@@ -5072,70 +5097,16 @@ var FINISHED = 'finished';
  * @extends {Observer}
  */
 
-var WebAudio =
-/*#__PURE__*/
-function (_util$Observer) {
+var WebAudio = /*#__PURE__*/function (_util$Observer) {
   _inherits(WebAudio, _util$Observer);
 
-  _createClass(WebAudio, [{
-    key: "supportsWebAudio",
+  var _super = _createSuper(WebAudio);
 
-    /** @private */
-
-    /** @private */
-
-    /** @private */
-
-    /** @private */
-
-    /**
-     * Does the browser support this backend
-     *
-     * @return {boolean} Whether or not this browser supports this backend
-     */
-    value: function supportsWebAudio() {
-      return !!(window.AudioContext || window.webkitAudioContext);
-    }
-    /**
-     * Get the audio context used by this backend or create one
-     *
-     * @return {AudioContext} Existing audio context, or creates a new one
-     */
-
-  }, {
-    key: "getAudioContext",
-    value: function getAudioContext() {
-      if (!window.WaveSurferAudioContext) {
-        window.WaveSurferAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-      }
-
-      return window.WaveSurferAudioContext;
-    }
-    /**
-     * Get the offline audio context used by this backend or create one
-     *
-     * @param {number} sampleRate The sample rate to use
-     * @return {OfflineAudioContext} Existing offline audio context, or creates
-     * a new one
-     */
-
-  }, {
-    key: "getOfflineAudioContext",
-    value: function getOfflineAudioContext(sampleRate) {
-      if (!window.WaveSurferOfflineAudioContext) {
-        window.WaveSurferOfflineAudioContext = new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(1, 2, sampleRate);
-      }
-
-      return window.WaveSurferOfflineAudioContext;
-    }
-    /**
-     * Construct the backend
-     *
-     * @param {WavesurferParams} params Wavesurfer parameters
-     */
-
-  }]);
-
+  /**
+   * Construct the backend
+   *
+   * @param {WavesurferParams} params Wavesurfer parameters
+   */
   function WebAudio(params) {
     var _this$stateBehaviors, _this$states;
 
@@ -5143,7 +5114,7 @@ function (_util$Observer) {
 
     _classCallCheck(this, WebAudio);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(WebAudio).call(this));
+    _this = _super.call(this);
     /** @private */
 
     _this.audioContext = null;
@@ -5237,7 +5208,7 @@ function (_util$Observer) {
     /** @private */
 
     _this.state = null;
-    /** @private */
+    /** @protected */
 
     _this.explicitDuration = params.duration;
     return _this;
@@ -5248,6 +5219,57 @@ function (_util$Observer) {
 
 
   _createClass(WebAudio, [{
+    key: "supportsWebAudio",
+    value:
+    /** @private */
+
+    /** @private */
+
+    /** @private */
+
+    /** @private */
+
+    /**
+     * Does the browser support this backend
+     *
+     * @return {boolean} Whether or not this browser supports this backend
+     */
+    function supportsWebAudio() {
+      return !!(window.AudioContext || window.webkitAudioContext);
+    }
+    /**
+     * Get the audio context used by this backend or create one
+     *
+     * @return {AudioContext} Existing audio context, or creates a new one
+     */
+
+  }, {
+    key: "getAudioContext",
+    value: function getAudioContext() {
+      if (!window.WaveSurferAudioContext) {
+        window.WaveSurferAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      return window.WaveSurferAudioContext;
+    }
+    /**
+     * Get the offline audio context used by this backend or create one
+     *
+     * @param {number} sampleRate The sample rate to use
+     * @return {OfflineAudioContext} Existing offline audio context, or creates
+     * a new one
+     */
+
+  }, {
+    key: "getOfflineAudioContext",
+    value: function getOfflineAudioContext(sampleRate) {
+      if (!window.WaveSurferOfflineAudioContext) {
+        window.WaveSurferOfflineAudioContext = new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(1, 2, sampleRate);
+      }
+
+      return window.WaveSurferOfflineAudioContext;
+    }
+  }, {
     key: "init",
     value: function init() {
       this.createVolumeNode();
@@ -5477,7 +5499,7 @@ function (_util$Observer) {
      * Set pre-decoded peaks
      *
      * @param {number[]|Number.<Array[]>} peaks Peaks data
-     * @param {?number} duration Explicit duration
+     * @param {number?} duration Explicit duration
      */
 
   }, {
@@ -5499,7 +5521,7 @@ function (_util$Observer) {
     key: "setLength",
     value: function setLength(length) {
       // No resize, we can preserve the cached peaks.
-      if (this.mergedPeaks && length == 2 * this.mergedPeaks.length - 1 + 2) {
+      if (this.mergedPeaks && length === 2 * this.mergedPeaks.length - 1 + 2) {
         return;
       }
 
@@ -5512,12 +5534,17 @@ function (_util$Observer) {
 
       for (c = 0; c < channels; c++) {
         this.splitPeaks[c] = [];
-        this.splitPeaks[c][2 * (length - 1)] = 0;
-        this.splitPeaks[c][2 * (length - 1) + 1] = 0;
+
+        if (length) {
+          this.splitPeaks[c][2 * (length - 1)] = 0;
+          this.splitPeaks[c][2 * (length - 1) + 1] = 0;
+        }
       }
 
-      this.mergedPeaks[2 * (length - 1)] = 0;
-      this.mergedPeaks[2 * (length - 1) + 1] = 0;
+      if (length) {
+        this.mergedPeaks[2 * (length - 1)] = 0;
+        this.mergedPeaks[2 * (length - 1) + 1] = 0;
+      }
     }
     /**
      * Compute the max and min value of the waveform when broken into <length> subranges.
@@ -5593,11 +5620,11 @@ function (_util$Observer) {
           peaks[2 * i] = max;
           peaks[2 * i + 1] = min;
 
-          if (c == 0 || max > this.mergedPeaks[2 * i]) {
+          if (c === 0 || max > this.mergedPeaks[2 * i]) {
             this.mergedPeaks[2 * i] = max;
           }
 
-          if (c == 0 || min < this.mergedPeaks[2 * i + 1]) {
+          if (c === 0 || min < this.mergedPeaks[2 * i + 1]) {
             this.mergedPeaks[2 * i + 1] = min;
           }
         }
@@ -5646,7 +5673,7 @@ function (_util$Observer) {
 
       if (this.params.closeAudioContext) {
         // check if browser supports AudioContext.close()
-        if (typeof this.ac.close === 'function' && this.ac.state != 'closed') {
+        if (typeof this.ac.close === 'function' && this.ac.state !== 'closed') {
           this.ac.close();
         } // clear the reference to the audiocontext
 
@@ -5798,7 +5825,7 @@ function (_util$Observer) {
       this.scheduledPause = end;
       this.source.start(0, start, end - start);
 
-      if (this.ac.state == 'suspended') {
+      if (this.ac.state === 'suspended') {
         this.ac.resume && this.ac.resume();
       }
 

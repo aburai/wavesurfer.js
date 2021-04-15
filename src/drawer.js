@@ -196,7 +196,7 @@ export default class Drawer extends util.Observer {
         let target = position - half;
         let offset = target - scrollLeft;
 
-        if (maxScroll == 0) {
+        if (maxScroll === 0) {
             // no need to continue if scrollbar is not there
             return;
         }
@@ -217,7 +217,7 @@ export default class Drawer extends util.Observer {
         // limit target to valid range (0 to maxScroll)
         target = Math.max(0, Math.min(maxScroll, target));
         // no use attempting to scroll if we're not moving
-        if (target != scrollLeft) {
+        if (target !== scrollLeft) {
             this.wrapper.scrollLeft = target;
         }
     }
@@ -335,7 +335,7 @@ export default class Drawer extends util.Observer {
     destroy() {
         this.unAll();
         if (this.wrapper) {
-            if (this.wrapper.parentNode == this.container) {
+            if (this.wrapper.parentNode === this.container) {
                 this.container.removeChild(this.wrapper);
             }
             this.wrapper = null;

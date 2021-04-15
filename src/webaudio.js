@@ -145,7 +145,7 @@ export default class WebAudio extends util.Observer {
         this.splitPeaks = [];
         /** @private */
         this.state = null;
-        /** @private */
+        /** @protected */
         this.explicitDuration = params.duration;
     }
 
@@ -665,7 +665,7 @@ export default class WebAudio extends util.Observer {
 
         this.source.start(0, start, end - start);
 
-        if (this.ac.state == 'suspended') {
+        if (this.ac.state === 'suspended') {
             this.ac.resume && this.ac.resume();
         }
 

@@ -31,7 +31,7 @@
     "doc": "esdoc",
     "test": "karma start karma.conf.js",
     "prepublishOnly": "not-in-install && npm run build || in-install",
-    "prepare": "npm run build"
+    "prepare": "npm config set scripts-prepend-node-path auto && npm run build"
   },
   "repository": {
     "type": "git",

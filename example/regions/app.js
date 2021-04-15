@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 dragSelection: {
                     slop: 5
                 }
+            }),
+            WaveSurfer.cursor.create({
+                showTime: true
             })
         ]
     });

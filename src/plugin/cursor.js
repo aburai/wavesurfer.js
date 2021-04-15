@@ -208,7 +208,9 @@ export default class CursorPlugin {
             );
         }
 
-        this.wrapper.addEventListener('mousemove', this._onMousemove);
+        this.wrapper.addEventListener('mousemove', this._onMousemove, {
+            passive: true
+        });
         if (this.params.hideOnBlur) {
             // ensure elements are hidden initially
             this.hideCursor();
@@ -239,6 +241,7 @@ export default class CursorPlugin {
      * @param {number} ypos The y offset of the cursor in pixels
      */
     updateCursorPosition(xpos, ypos) {
+        // TODO could be -0.5
         this.style(this.cursor, {
             left: `${xpos}px`
         });
