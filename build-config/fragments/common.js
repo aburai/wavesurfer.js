@@ -2,7 +2,6 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const datefns = require('date-fns');
 
 const rootDir = path.resolve(__dirname, '..', '..');
 const pckg = require(path.join(rootDir, 'package.json'));
@@ -22,6 +21,7 @@ module.exports = {
     performance: {
         hints: false
     },
+    stats: 'minimal',
     module: {
         rules: [
             {
